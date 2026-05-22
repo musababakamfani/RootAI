@@ -1,0 +1,6 @@
+{
+  "name": "RootAI",
+  "description": "An AI Community Service Assistant for daily life support, jobs, business, farming, learning, and public services.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
