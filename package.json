@@ -1,26 +1,41 @@
 {
   "name": "rootai",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+
   "scripts": {
-   "dev": "tsx watch server.ts"
-    "build": "vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
-    "start": "node dist/server.cjs",
+    "dev": "concurrently \"vite\" \"tsx watch server.ts\"",
+
+    "build:client": "vite build",
+    "build:server": "tsc -p server",
+    "build": "npm run build:client && npm run build:server",
+
+    "start": "node dist/server.js",
+
     "clean": "rm -rf dist",
-   "lint": "tsc --noEmit",
-"check": "npm run lint && npm run build"
+
+    "lint": "tsc --noEmit",
+
+    "check": "npm run lint && npm run build"
   },
+
   "dependencies": {
     "@google/genai": "^1.29.0",
     "@tailwindcss/vite": "^4.1.14",
     "@vitejs/plugin-react": "^5.0.4",
-    "lucide-react": "^0.546.0",
-    "react": "^19.0.1",
-    "react-dom": "^19.0.1",
-    "vite": "^6.2.3",
     "express": "^4.21.2",
     "dotenv": "^17.2.3",
-    "motion": "^12.23.24"
+    "lucide-react": "^0.546.0",
+    "motion": "^12.23.24",
+    "react": "^19.0.1",
+    "react-dom": "^19.0.1",
+    "vite": "^6.2.3"
   },
-  
+
+  "devDependencies": {
+    "concurrently": "^9.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.0"
+  }
+}
