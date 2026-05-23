@@ -13,7 +13,9 @@ import {
   ExternalLink,
   PlusCircle,
   HelpCircle,
-  CheckCircle2
+  CheckCircle2,
+  X,
+  AlertCircle
 } from 'lucide-react';
 import { Opportunity } from '../types';
 
@@ -31,6 +33,7 @@ export default function DashboardView({
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [onlyVerified, setOnlyVerified] = useState<boolean>(false);
+  const isQueryTooShort = searchQuery.trim().length > 0 && searchQuery.trim().length < 3;
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
 
@@ -139,8 +142,8 @@ export default function DashboardView({
       {/* Search and Navigation Headers */}
       <div className="bg-white p-4 rounded-xl border border-slate-100 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         {/* Keyword Lookup with Trust Filters */}
-        <div className="flex-1 flex flex-col sm:flex-row sm:items-center gap-2.5">
-          <div className="relative flex-1">
+        <div className="flex-1 flex flex-col sm:flex-row sm:items-center gap-2.5 font-sans">
+          <div className="relative w-full sm:max-w-xs focus-within:sm:max-w-md transition-all duration-300 ease-in-out">
             <span className="absolute inset-y-0 left-3 flex items-center text-slate-400 pointer-events-none">
               <Search className="w-4 h-4" />
             </span>
@@ -149,9 +152,35 @@ export default function DashboardView({
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-4 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-teal-500 font-sans"
+              className={`w-full bg-slate-50 border rounded-xl pl-9 pr-8 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none transition-all duration-305 ease-in-out font-sans ${
+                isQueryTooShort 
+                  ? 'border-amber-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:bg-white bg-amber-50/10' 
+                  : 'border-slate-200 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/15 focus:bg-white'
+              }`}
               placeholder="Search positions, locations, or verified programs..."
             />
+            {searchQuery && (
+              <button
+                type="button"
+                id="opp-search-clear-btn"
+                onClick={() => setSearchQuery('')}
+                className="absolute inset-y-0 right-2.5 my-auto h-7 w-7 flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-200/55 rounded-full transition-all cursor-pointer"
+                aria-label="Clear search"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
+
+            {/* Visual Search Quality Warning Tooltip */}
+            {isQueryTooShort && (
+              <div 
+                id="opp-search-warning"
+                className="absolute left-0 right-0 top-full mt-1.5 z-20 bg-amber-50 border border-amber-200 rounded-xl p-2.5 shadow-sm flex items-center gap-2 text-[10.5px] text-amber-800 font-sans"
+              >
+                <AlertCircle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                <span>Search query is too short (min. 3 characters)</span>
+              </div>
+            )}
           </div>
           
           {/* Verified Toggle Filter */}
