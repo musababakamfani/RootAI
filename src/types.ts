@@ -10,10 +10,10 @@ export interface ChatMessage {
   timestamp: string;
   category?: string;
   groundingChunks?: GroundingChunk[];
-  confidenceScore?: number; // e.g., 95 for 95%
-  confidenceExplanation?: string; // explanation of how confidence score was computed
-  isHumanReviewed?: boolean; // Human reviewed badge for sensitive topics
-  humanReviewReason?: string; // Reason / editor info
+  confidenceScore?: number;
+  confidenceExplanation?: string;
+  isHumanReviewed?: boolean;
+  humanReviewReason?: string;
 }
 
 export interface UserProfile {
@@ -37,12 +37,12 @@ export interface Opportunity {
   linkText?: string;
   linkUrl?: string;
   isSaved?: boolean;
-  valueBadge?: string; // e.g. "$5,000 Grant", "Free Crop Checkup", "Paid Internship"
-  isVerified?: boolean; // Verified jobs/grants/scholarships only toggles
-  verificationReason?: string; // How it was verified (e.g. "Verified by Admin Team with Gov Registry ID 93821")
-  scamRiskScore?: 'low' | 'medium' | 'high'; // Scam detection for opportunities
-  scamAnalysisText?: string; // Short notes on risk indicators checked (e.g. no upfront payment requested, genuine domain)
-  humanReviewedBy?: string; // "Human reviewed" badge details
+  valueBadge?: string;
+  isVerified?: boolean;
+  verificationReason?: string;
+  scamRiskScore?: 'low' | 'medium' | 'high';
+  scamAnalysisText?: string;
+  humanReviewedBy?: string;
 }
 
 export interface SchemaTable {
