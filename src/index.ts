@@ -15,20 +15,12 @@ const PORT = process.env.PORT || 3000;
 app.use('/api/chat', chatRoutes);
 app.use('/api/webhooks', webhookRoutes);
 
-const isProd = process.env.NODE_ENV === 'production';
+const distPath = path.join(process.cwd(), 'client/dist');
 
-if (isProd) {
-  const distPath = path.join(process.cwd(), 'client/dist');
+app.use(express.static(distPath));
 
-  app.use(express.static(distPath));
-
-  app.get('*', (_, res) => {
-    res.sendFile(path.join(distPath, 'index.html'));
-  });
-}
-
-app.get('/health', (_, res) => {
-  res.json({ status: 'ok' });
+app.get('*', (_, res) => {
+  res.sendFile(path.join(distPath, 'index.html'));
 });
 
 app.listen(PORT, () => {
